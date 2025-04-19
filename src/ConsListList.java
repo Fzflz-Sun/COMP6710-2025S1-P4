@@ -2,6 +2,9 @@ import org.junit.platform.engine.support.hierarchical.EngineExecutionContext;
 import org.junit.platform.engine.support.hierarchical.Node;
 
 import java.util.List;
+
+import static comp1110.lib.Functions.Equals;
+
 //implements List<T>
 public class ConsListList<T>{//implement has been commented for testing
 
@@ -47,7 +50,11 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public boolean isEmpty() {
-        return false;
+        if(first == null){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -86,7 +93,6 @@ public class ConsListList<T>{//implement has been commented for testing
                 }
             }
         }
-
         return false;
     }
 
@@ -113,6 +119,16 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public boolean remove(Object o) {
+        Node<T> current = first;
+        for(;current != null; current = current.next){
+            if(current.next.data.equals(o)){
+                current.next = current.next.next;
+                return true;//times determines
+            }else if(current.data.equals(o)){//determine whether the first element is the target
+                first=current.next;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -126,6 +142,17 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public T get(int index) {
+        if(index<0||index>=this.size()){
+            throw new IndexOutOfBoundsException(index);
+        }
+        Node<T> current = first;
+        int i=0;
+        for(; current!=null; current=current.next){
+            if(i==index){
+                return current.data;
+            }
+            i++;
+        }
         return null;
     }
 
@@ -149,6 +176,18 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public T set(int index, T element) {
-        return null;
+        if(index<0||index>=this.size()){
+            throw new IndexOutOfBoundsException(index);
+        }
+        T rValue = this.get(index);
+        Node<T> current=first;
+        int i=0;
+        for(; current != null; current=current.next){
+            if(i==index){
+                current.data=element;
+            }
+            i++;
+        }
+        return rValue;
     }
 }
