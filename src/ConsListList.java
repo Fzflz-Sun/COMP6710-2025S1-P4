@@ -1,7 +1,28 @@
+import org.junit.platform.engine.support.hierarchical.EngineExecutionContext;
+import org.junit.platform.engine.support.hierarchical.Node;
+
 import java.util.List;
+//implements List<T>
+public class ConsListList<T>{//implement has been commented for testing
 
-public class ConsListList<T> implements List<T> {
+    /**
+     * generate a new node first
+     */
+    private Node<T> first;
 
+    public ConsListList() {
+        first = null;
+    }
+
+    private static class Node<T> {
+        T data;
+        Node<T> next;
+
+        public Node(T data){
+            this.data = data;
+            next = null;
+        }
+    }
     /**
      * Returns the number of elements in this list.  If this list contains
      * more than {@code Integer.MAX_VALUE} elements, returns
@@ -9,9 +30,14 @@ public class ConsListList<T> implements List<T> {
      *
      * @return the number of elements in this list
      */
-    @Override
+//    @Override
     public int size() {
-        return 0;
+        Node<T> current = first;
+        int count;
+        for(count=0; current!=null; count++){
+            current = current.next;
+        }
+        return count;
     }
 
     /**
@@ -19,7 +45,7 @@ public class ConsListList<T> implements List<T> {
      *
      * @return {@code true} if this list contains no elements
      */
-    @Override
+//    @Override
     public boolean isEmpty() {
         return false;
     }
@@ -46,8 +72,21 @@ public class ConsListList<T> implements List<T> {
      * @throws IllegalArgumentException      if some property of this element
      *                                       prevents it from being added to this list
      */
-    @Override
+//    @Override
     public boolean add(T t) {
+        Node<T> current = first;
+        if(current == null){//determine whether the first element is null
+            first = new Node<>(t);
+            return true;
+        }else{
+            for(; current!=null; current=current.next){//go through all the elements
+                if(current.next==null){//determine whether it is the last element
+                    current.next = new Node<>(t);
+                    return true;
+                }
+            }
+        }
+
         return false;
     }
 
@@ -72,7 +111,7 @@ public class ConsListList<T> implements List<T> {
      * @throws UnsupportedOperationException if the {@code remove} operation
      *                                       is not supported by this list
      */
-    @Override
+//    @Override
     public boolean remove(Object o) {
         return false;
     }
@@ -85,7 +124,7 @@ public class ConsListList<T> implements List<T> {
      * @throws IndexOutOfBoundsException if the index is out of range
      *                                   ({@code index < 0 || index >= size()})
      */
-    @Override
+//    @Override
     public T get(int index) {
         return null;
     }
@@ -108,7 +147,7 @@ public class ConsListList<T> implements List<T> {
      * @throws IndexOutOfBoundsException     if the index is out of range
      *                                       ({@code index < 0 || index >= size()})
      */
-    @Override
+//    @Override
     public T set(int index, T element) {
         return null;
     }
