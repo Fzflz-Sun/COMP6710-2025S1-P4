@@ -150,8 +150,14 @@ public class ConsListList<T>{//implement has been commented for testing
     public boolean remove(Object o) {
         Node<T> current = first;
         for(;current != null; current = current.next){
+//            System.out.println(current.next.data.equals(o));
+//            System.out.println(current.next.data);
             if(current.next.data.equals(o)){
-                current.next = current.next.next;
+                if(current.next.next!=null){//determine whether the next next element is null
+                    current.next = current.next.next;
+                }else{
+                    current.next = null;
+                }
                 return true;//times determines
             }else if(current.data.equals(o)){//determine whether the first element is the target
                 first=current.next;
@@ -181,6 +187,9 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public boolean containsAll(Collection<?> c) {
+        if(c == null){
+            throw new NullPointerException();
+        }
 //        boolean temp = false;//insert a temporary variable for recording whether the current element in collection is contained
         Iterator<?> i = c.iterator();
         while(i.hasNext()){
@@ -219,7 +228,36 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public boolean removeAll(Collection<?> c) {
+        Iterator<?> i =c.iterator();
+        while(i.hasNext()){
+            Object o = i.next();
+            remove(o);
+            if(!i.hasNext()){
+                return true;
+            }
+        }
         return false;
+    }
+
+    public boolean removeAllElements(Object o){
+        Node<T> current = first;
+        for(; current != null; current = current.next){
+            System.out.println(current.data);
+//            System.out.println(current.next.data);
+            if(current.data.equals(o)&&current.next.data.equals(o)){
+                first=current.next.next;
+            }else if(current.data.equals(o)){
+                first=current.next;
+            }else if(current.next.data.equals(o)){//determine whether the first element is the target
+                if(current.next.next!=null){//determine whether the next next element is null
+                    current.next = current.next.next;
+                }else{
+                    current.next = null;
+                }
+            }
+
+        }
+        return true;
     }
 
     /**
