@@ -1,6 +1,8 @@
 import org.junit.platform.engine.support.hierarchical.EngineExecutionContext;
 import org.junit.platform.engine.support.hierarchical.Node;
 
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import static comp1110.lib.Functions.Equals;
@@ -55,6 +57,33 @@ public class ConsListList<T>{//implement has been commented for testing
         }else{
             return false;
         }
+    }
+
+    /**
+     * Returns {@code true} if this list contains the specified element.
+     * More formally, returns {@code true} if and only if this list contains
+     * at least one element {@code e} such that
+     * {@code Objects.equals(o, e)}.
+     *
+     * @param o element whose presence in this list is to be tested
+     * @return {@code true} if this list contains the specified element
+     * @throws ClassCastException   if the type of the specified element
+     *                              is incompatible with this list
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
+     * @throws NullPointerException if the specified element is null and this
+     *                              list does not permit null elements
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
+     */
+//    @Override
+    public boolean contains(Object o) {
+        int i = 0;
+        Node <T> current=first;
+        for(;current != null; current = current.next){
+            if(current.data.equals(o)){
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -133,6 +162,104 @@ public class ConsListList<T>{//implement has been commented for testing
     }
 
     /**
+     * Returns {@code true} if this list contains all of the elements of the
+     * specified collection.
+     *
+     * @param c collection to be checked for containment in this list
+     * @return {@code true} if this list contains all of the elements of the
+     * specified collection
+     * @throws ClassCastException   if the types of one or more elements
+     *                              in the specified collection are incompatible with this
+     *                              list
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
+     * @throws NullPointerException if the specified collection contains one
+     *                              or more null elements and this list does not permit null
+     *                              elements
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>),
+     *                              or if the specified collection is null
+     * @see #contains(Object)
+     */
+//    @Override
+    public boolean containsAll(Collection<?> c) {
+//        boolean temp = false;//insert a temporary variable for recording whether the current element in collection is contained
+        Iterator<?> i = c.iterator();
+        while(i.hasNext()){
+            Object o = i.next();
+            if(this.contains(o)){
+//                temp = true;
+//            System.out.println(i.hasNext());
+                if(!i.hasNext()){
+                    return true;
+                }
+            }else{
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Removes from this list all of its elements that are contained in the
+     * specified collection (optional operation).
+     *
+     * @param c collection containing elements to be removed from this list
+     * @return {@code true} if this list changed as a result of the call
+     * @throws UnsupportedOperationException if the {@code removeAll} operation
+     *                                       is not supported by this list
+     * @throws ClassCastException            if the class of an element of this list
+     *                                       is incompatible with the specified collection
+     *                                       (<a href="Collection.html#optional-restrictions">optional</a>)
+     * @throws NullPointerException          if this list contains a null element and the
+     *                                       specified collection does not permit null elements
+     *                                       (<a href="Collection.html#optional-restrictions">optional</a>),
+     *                                       or if the specified collection is null
+     * @see #remove(Object)
+     * @see #contains(Object)
+     */
+//    @Override
+    public boolean removeAll(Collection<?> c) {
+        return false;
+    }
+
+    /**
+     * Retains only the elements in this list that are contained in the
+     * specified collection (optional operation).  In other words, removes
+     * from this list all of its elements that are not contained in the
+     * specified collection.
+     *
+     * @param c collection containing elements to be retained in this list
+     * @return {@code true} if this list changed as a result of the call
+     * @throws UnsupportedOperationException if the {@code retainAll} operation
+     *                                       is not supported by this list
+     * @throws ClassCastException            if the class of an element of this list
+     *                                       is incompatible with the specified collection
+     *                                       (<a href="Collection.html#optional-restrictions">optional</a>)
+     * @throws NullPointerException          if this list contains a null element and the
+     *                                       specified collection does not permit null elements
+     *                                       (<a href="Collection.html#optional-restrictions">optional</a>),
+     *                                       or if the specified collection is null
+     * @see #remove(Object)
+     * @see #contains(Object)
+     */
+//    @Override
+    public boolean retainAll(Collection<?> c) {
+        return false;
+    }
+
+    /**
+     * Removes all of the elements from this list (optional operation).
+     * The list will be empty after this call returns.
+     *
+     * @throws UnsupportedOperationException if the {@code clear} operation
+     *                                       is not supported by this list
+     */
+//    @Override
+    public void clear() {
+
+    }
+
+    /**
      * Returns the element at the specified position in this list.
      *
      * @param index index of the element to return
@@ -189,5 +316,91 @@ public class ConsListList<T>{//implement has been commented for testing
             i++;
         }
         return rValue;
+    }
+
+    /**
+     * Inserts the specified element at the specified position in this list
+     * (optional operation).  Shifts the element currently at that position
+     * (if any) and any subsequent elements to the right (adds one to their
+     * indices).
+     *
+     * @param index   index at which the specified element is to be inserted
+     * @param element element to be inserted
+     * @throws UnsupportedOperationException if the {@code add} operation
+     *                                       is not supported by this list
+     * @throws ClassCastException            if the class of the specified element
+     *                                       prevents it from being added to this list
+     * @throws NullPointerException          if the specified element is null and
+     *                                       this list does not permit null elements
+     * @throws IllegalArgumentException      if some property of the specified
+     *                                       element prevents it from being added to this list
+     * @throws IndexOutOfBoundsException     if the index is out of range
+     *                                       ({@code index < 0 || index > size()})
+     */
+//    @Override
+    public void add(int index, T element) {
+
+    }
+
+    /**
+     * Removes the element at the specified position in this list (optional
+     * operation).  Shifts any subsequent elements to the left (subtracts one
+     * from their indices).  Returns the element that was removed from the
+     * list.
+     *
+     * @param index the index of the element to be removed
+     * @return the element previously at the specified position
+     * @throws UnsupportedOperationException if the {@code remove} operation
+     *                                       is not supported by this list
+     * @throws IndexOutOfBoundsException     if the index is out of range
+     *                                       ({@code index < 0 || index >= size()})
+     */
+//    @Override
+    public T remove(int index) {
+        return null;
+    }
+
+    /**
+     * Returns the index of the first occurrence of the specified element
+     * in this list, or -1 if this list does not contain the element.
+     * More formally, returns the lowest index {@code i} such that
+     * {@code Objects.equals(o, get(i))},
+     * or -1 if there is no such index.
+     *
+     * @param o element to search for
+     * @return the index of the first occurrence of the specified element in
+     * this list, or -1 if this list does not contain the element
+     * @throws ClassCastException   if the type of the specified element
+     *                              is incompatible with this list
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
+     * @throws NullPointerException if the specified element is null and this
+     *                              list does not permit null elements
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
+     */
+//    @Override
+    public int indexOf(Object o) {
+        return 0;
+    }
+
+    /**
+     * Returns the index of the last occurrence of the specified element
+     * in this list, or -1 if this list does not contain the element.
+     * More formally, returns the highest index {@code i} such that
+     * {@code Objects.equals(o, get(i))},
+     * or -1 if there is no such index.
+     *
+     * @param o element to search for
+     * @return the index of the last occurrence of the specified element in
+     * this list, or -1 if this list does not contain the element
+     * @throws ClassCastException   if the type of the specified element
+     *                              is incompatible with this list
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
+     * @throws NullPointerException if the specified element is null and this
+     *                              list does not permit null elements
+     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
+     */
+//    @Override
+    public int lastIndexOf(Object o) {
+        return 0;
     }
 }
