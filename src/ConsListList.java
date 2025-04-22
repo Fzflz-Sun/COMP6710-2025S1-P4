@@ -298,43 +298,41 @@ public class ConsListList<T>{//implement has been commented for testing
      * @see #contains(Object)
      */
 //    @Override
-    public boolean retainAll(Collection<?> c) {
-        Iterator<?> i = c.iterator();
-        while(i.hasNext()){
-            Object o = i.next();
-            retainAllElements(o);
-            if(!i.hasNext()){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean retainAllElements(Collection<?> c){
+    public boolean retainAll(Collection<?> c){
         Node<T> current = first;
         for(;current!= null; current = current.next){
             if(!allCollections(first, c)){
-                first=retainContinueElement(first,o);
+                first=retainContinueElement(first,c);
             }else if(current.next==null){
                 return true;
-            }else if(!current.next.data.equals(o)){
-                current.next=retainContinueElement(current.next,o);
+            }else if(!allCollections(current.next, c)){
+                current.next=retainContinueElement(current.next,c);
             }
         }
         return false;
     }
 
-    public Node<T> retainContinueElement(Node<T> current, Object o){
-        for(;!current.data.equals(o);current=current.next){
-            if(current.next!=null){//determines null
-                if(current.next.data.equals(o)){
-                    return current.next;
+    //determine whether there are continual targets
+    public Node<T> retainContinueElement(Node<T> current, Collection<?> c){
+        if(current.next!=null){
+            if(!allCollections(current.next, c)){//the next target is not the element
+                for(;!allCollections(current.next, c);current=current.next){//determine which is the target after the next
+                    if(current.next.next!=null){
+                        if(allCollections(current.next.next, c)){//the next next element is the target
+                            return current.next.next;
+                        }
+                    }else{
+                        return null;
+                    }
                 }
-            }else{
-                return null;
+            }else if(allCollections(current.next, c)){//the next element is the target
+                return current.next;
             }
+        }else{
+            return null;
         }
-        return current;
+
+        return null;
     }
 
     //go through all elements from collection c when determine whether linked-list element is the target
