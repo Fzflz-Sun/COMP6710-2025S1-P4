@@ -299,6 +299,53 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public boolean retainAll(Collection<?> c) {
+        Iterator<?> i = c.iterator();
+        while(i.hasNext()){
+            Object o = i.next();
+            retainAllElements(o);
+            if(!i.hasNext()){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean retainAllElements(Collection<?> c){
+        Node<T> current = first;
+        for(;current!= null; current = current.next){
+            if(!allCollections(first, c)){
+                first=retainContinueElement(first,o);
+            }else if(current.next==null){
+                return true;
+            }else if(!current.next.data.equals(o)){
+                current.next=retainContinueElement(current.next,o);
+            }
+        }
+        return false;
+    }
+
+    public Node<T> retainContinueElement(Node<T> current, Object o){
+        for(;!current.data.equals(o);current=current.next){
+            if(current.next!=null){//determines null
+                if(current.next.data.equals(o)){
+                    return current.next;
+                }
+            }else{
+                return null;
+            }
+        }
+        return current;
+    }
+
+    //go through all elements from collection c when determine whether linked-list element is the target
+    public boolean allCollections(Node<T> current, Collection<?> c){
+        Iterator<?> i = c.iterator();
+        while(i.hasNext()){
+            Object o= i.next();
+            if(current.data.equals(o)){
+                return true;
+            }
+        }
         return false;
     }
 

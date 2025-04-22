@@ -4,7 +4,7 @@ import java.util.List;
 public class ConsListList_Launcher {
     public static void main(String[] args){
         ConsListList<Integer> l1 = new ConsListList<>();
-        ArrayList<Integer> list1 = new ArrayList<>(List.of(123));
+        ArrayList<Integer> list1 = new ArrayList<>(List.of(123,456));
 //        ArrayList<String> list2 = new ArrayList<>();
 //        list2.add("123");
 //        list2.add("456");
@@ -16,16 +16,23 @@ public class ConsListList_Launcher {
         l1.add(123);
         l1.add(123);
         l1.add(789);
+        l1.add(123);
 //        System.out.println(l1.set(0,789));
 //        System.out.println(l1.size());
 //        System.out.println(l1.remove(Integer.valueOf(123)));
-        System.out.println(l1.removeAllElements(123));
+//        System.out.println(l1.removeAll(list1));
+        System.out.println(l1.retainAll(list1));
 //        System.out.println(l1.size());
 //        System.out.println(l1.size());
         System.out.println(l1.get(0));
         System.out.println(l1.get(1));
         System.out.println(l1.get(2));
         System.out.println(l1.get(3));
+        System.out.println(l1.get(4));
+        System.out.println(l1.get(5));
+        System.out.println(l1.get(6));
+        System.out.println(l1.get(7));
+        System.out.println(l1.get(8));
 //        System.out.println(l1.containsAll(null));
 //        System.out.println(l1.contains(456));
 //        System.out.println(l1.size());
