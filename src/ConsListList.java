@@ -229,9 +229,9 @@ public class ConsListList<T>{//implement has been commented for testing
 //    @Override
     public boolean removeAll(Collection<?> c) {
         Iterator<?> i =c.iterator();
-        while(i.hasNext()){
+        while(i.hasNext()){//go through collection c
             Object o = i.next();
-            remove(o);
+            removeAllElements(o);
             if(!i.hasNext()){
                 return true;
             }
@@ -241,23 +241,40 @@ public class ConsListList<T>{//implement has been commented for testing
 
     public boolean removeAllElements(Object o){
         Node<T> current = first;
-        for(; current != null; current = current.next){
-            System.out.println(current.data);
+        for(; current != null; current = current.next){//go through linked-list
+//            System.out.println("current data");
+//            System.out.println(current.data);
 //            System.out.println(current.next.data);
-            if(current.data.equals(o)&&current.next.data.equals(o)){
-                first=current.next.next;
-            }else if(current.data.equals(o)){
-                first=current.next;
-            }else if(current.next.data.equals(o)){//determine whether the first element is the target
-                if(current.next.next!=null){//determine whether the next next element is null
-                    current.next = current.next.next;
-                }else{
-                    current.next = null;
-                }
+//            System.out.println(first.data.equals(o));
+            if(first.data.equals(o)){//determine whether the first element is the target and whether it has continuity
+                //new method
+                first=removeContinueSame(current,o);
+//                System.out.println("rectify");
+//                System.out.println(current.data);
+            }else if(current.next==null){
+                return true;
+            }else if(current.next.data.equals(o)){//determine whether the current.next element is the target and whether it has continuity
+                current.next=removeContinueSame(current.next,o);
             }
 
         }
         return true;
+    }
+
+    Node<T> removeContinueSame(Node<T> current, Object o){
+        for(; current.data.equals(o); current=current.next){
+            if(current.next!=null){
+                if(!current.next.data.equals(o)){//without continuity
+//                    System.out.println("rcs next data");
+//                    System.out.println(current.next.data);
+                    return current.next;
+                }
+            }else{
+                return null;
+            }
+        }
+        return current;
+
     }
 
     /**
