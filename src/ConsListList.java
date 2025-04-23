@@ -356,7 +356,7 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public void clear() {
-
+        first = null;
     }
 
     /**
@@ -402,7 +402,7 @@ public class ConsListList<T>{//implement has been commented for testing
      *                                       ({@code index < 0 || index >= size()})
      */
 //    @Override
-    public T set(int index, T element) {
+    public T set(int index, T t) {
         if(index<0||index>=this.size()){
             throw new IndexOutOfBoundsException(index);
         }
@@ -411,7 +411,7 @@ public class ConsListList<T>{//implement has been commented for testing
         int i=0;
         for(; current != null; current=current.next){
             if(i==index){
-                current.data=element;
+                current.data=t;
             }
             i++;
         }
@@ -439,7 +439,34 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public void add(int index, T element) {
-
+        if(index<0||index>this.size()){
+            throw new IndexOutOfBoundsException(index);
+        }else{
+            Node<T> current = first;
+            int i =0;
+            Node<T> temp = new Node<>(element);
+            if(first==null){
+                first=temp;
+            }else{
+                for(; current!=null; current=current.next){
+                    if(i == index&& index ==0){
+                        temp.next=first;
+                        first=temp;
+                        break;//为什么不加break也能跑
+                    }
+//                else if(i ==index&& index ==1){
+//                    first.next=temp;
+//                    temp.next=current;
+//                }
+                    else if(i ==index-1){//-1 for insert in current element, rather than current.next
+                        Node<T> after = current.next;
+                        current.next = temp;
+                        temp.next=after;
+                    }
+                    i++;
+                }
+            }
+        }
     }
 
     /**
@@ -457,6 +484,25 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public T remove(int index) {
+        if(index<0||index>=this.size()){
+            throw new IndexOutOfBoundsException(index);
+        }else{
+            Node<T> current=first;
+            int i =0;
+            for(;current!=null;current=current.next){
+                if(i==index&&index==0){
+                    first=first.next;
+                }else if(i==index-1){
+                    if(current.next==null){
+                        return null;//会出现这种情况吗
+                    }else{
+                        current.next=current.next.next;
+                    }
+
+                }
+                i++;
+            }
+        }
         return null;
     }
 
@@ -479,7 +525,15 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public int indexOf(Object o) {
-        return 0;
+        Node<T> current = first;
+        int i =0;
+        for(;current!=null;current=current.next){
+            if(current.data.equals(o)){
+                return i;
+            }
+            i++;
+        }
+        return -1;
     }
 
     /**
@@ -501,6 +555,34 @@ public class ConsListList<T>{//implement has been commented for testing
      */
 //    @Override
     public int lastIndexOf(Object o) {
-        return 0;
+        Node<T> current = first;
+        int i =0;
+        for(;current!=null;current=current.next){
+            if(current.data.equals(o)){
+                if(isLast(current,o)){
+                    return i;
+                }
+            }
+            i++;
+        }
+        return -1;
+    }
+
+    public boolean isLast(Node<T> current, Object o){
+        if(current.next==null){
+            return true;
+        }else{
+            for(; current!=null; current=current.next){
+                if(current.next==null) {
+                    return true;
+                }else{
+                    if(current.next.data.equals(o)){
+                        return false;
+                    }
+                }
+
+            }
+        }
+        return true;
     }
 }
