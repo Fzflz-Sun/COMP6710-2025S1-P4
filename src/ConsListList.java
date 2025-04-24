@@ -9,22 +9,38 @@ import java.util.function.Consumer;
 
 import static comp1110.lib.Functions.Equals;
 
-//implements List<T>
+
 public class ConsListList<T> implements List<T>{//implement has been commented for testing
 
     /**
-     * generate a new node first
+     * The first node in the linked list (head pointer).
      */
     private Node<T> first;
 
+    /**
+     * Constructs an empty ConsListList.
+     * Example:
+     * - Given: new ConsListList<>()
+     *   Expect: size() returns 0
+     * Strategy: simple expression
+     */
     public ConsListList() {
         first = null;
     }
 
+    /**
+     * Node class used to store list elements and the reference to the next node.
+     */
     private static class Node<T> {
+        /** Data stored in this node */
         T data;
+        /** Reference to the next node */
         Node<T> next;
 
+        /**
+         * Constructs a new node with the given data.
+         * @param data the value to store in the node
+         */
         public Node(T data){
             this.data = data;
             next = null;
@@ -37,6 +53,7 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
     }
 
     private class ConsListIterator implements Iterator<T> {
+
 
         private ConsListList.Node<T> current;
 
@@ -128,14 +145,17 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
             Iterator.super.forEachRemaining(action);
         }
     }
+
     /**
-     * Returns the number of elements in this list.  If this list contains
-     * more than {@code Integer.MAX_VALUE} elements, returns
-     * {@code Integer.MAX_VALUE}.
-     *
-     * @return the number of elements in this list
+     * Returns the number of elements in this list. If this list contains
+     * more than {@code Integer.MAX_VALUE} elements, returns {@code Integer.MAX_VALUE}.
+     * Example:
+     * - Given: [1, 2, 3]
+     *   Expect: 3
+     * Strategy: iteration
+     * @return the number of elements in the list
      */
-//    @Override
+    @Override
     public int size() {
         Node<T> current = first;
         int count;
@@ -147,10 +167,13 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
 
     /**
      * Returns {@code true} if this list contains no elements.
-     *
-     * @return {@code true} if this list contains no elements
+     * Example:
+     * - Given: []
+     *   Expect: true
+     * Strategy: case distinction
+     * @return true if list is empty
      */
-//    @Override
+    @Override
     public boolean isEmpty() {
         if(first == null){
             return true;
@@ -164,17 +187,14 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * More formally, returns {@code true} if and only if this list contains
      * at least one element {@code e} such that
      * {@code Objects.equals(o, e)}.
-     *
+     * Example:
+     * - Given: [1, 2, 3], contains(2)
+     *   Expect: true
+     * Strategy: iteration
      * @param o element whose presence in this list is to be tested
      * @return {@code true} if this list contains the specified element
-     * @throws ClassCastException   if the type of the specified element
-     *                              is incompatible with this list
-     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
-     * @throws NullPointerException if the specified element is null and this
-     *                              list does not permit null elements
-     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
      */
-//    @Override
+    @Override
     public boolean contains(Object o) {
         int i = 0;
         Node <T> current=first;
@@ -197,18 +217,14 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * classes should clearly specify in their documentation any restrictions
      * on what elements may be added.
      *
+     * Example:
+     * - Given: [1, 2], add(3)
+     * Expect: [1, 2, 3]
+     * Strategy: iteration
      * @param t element to be appended to this list
      * @return {@code true} (as specified by {@link Collection#add})
-     * @throws UnsupportedOperationException if the {@code add} operation
-     *                                       is not supported by this list
-     * @throws ClassCastException            if the class of the specified element
-     *                                       prevents it from being added to this list
-     * @throws NullPointerException          if the specified element is null and this
-     *                                       list does not permit null elements
-     * @throws IllegalArgumentException      if some property of this element
-     *                                       prevents it from being added to this list
      */
-//    @Override
+    @Override
     public boolean add(T t) {
         Node<T> current = first;
         if(current == null){//determine whether the first element is null
@@ -234,19 +250,14 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * (if such an element exists).  Returns {@code true} if this list
      * contained the specified element (or equivalently, if this list changed
      * as a result of the call).
-     *
+     * Example:
+     * - Given: [1, 2, 3], remove(2)
+     * Expect: [1, 3]
+     * Strategy: iteration
      * @param o element to be removed from this list, if present
      * @return {@code true} if this list contained the specified element
-     * @throws ClassCastException            if the type of the specified element
-     *                                       is incompatible with this list
-     *                                       (<a href="Collection.html#optional-restrictions">optional</a>)
-     * @throws NullPointerException          if the specified element is null and this
-     *                                       list does not permit null elements
-     *                                       (<a href="Collection.html#optional-restrictions">optional</a>)
-     * @throws UnsupportedOperationException if the {@code remove} operation
-     *                                       is not supported by this list
      */
-//    @Override
+    @Override
     public boolean remove(Object o) {
         Node<T> current = first;
         for(;current != null; current = current.next){
@@ -271,13 +282,16 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * Returns {@code true} if this list contains all of the elements of the
      * specified collection.
      *
+     * Example:
+     * Given: list = [1, 2, 3], collection = [2, 3]
+     * Expect: true
+     * Given: list = [1, 2, 3], collection = [2, 4]
+     * Expect: false
+     *
+     * Strategy: iteration
      * @param c collection to be checked for containment in this list
      * @return {@code true} if this list contains all of the elements of the
      * specified collection
-     * @throws ClassCastException   if the types of one or more elements
-     *                              in the specified collection are incompatible with this
-     *                              list
-     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
      * @throws NullPointerException if the specified collection contains one
      *                              or more null elements and this list does not permit null
      *                              elements
@@ -285,7 +299,7 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      *                              or if the specified collection is null
      * @see #contains(Object)
      */
-//    @Override
+    @Override
     public boolean containsAll(Collection<?> c) {
         if(c == null){
             throw new NullPointerException();
@@ -312,21 +326,15 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * Removes from this list all of its elements that are contained in the
      * specified collection (optional operation).
      *
+     * Example:
+     * - Given: list = [1, 2, 3, 2], collection = [2]
+     *   Expect: list = [1, 3]
+     *
+     * Strategy: iteration
      * @param c collection containing elements to be removed from this list
      * @return {@code true} if this list changed as a result of the call
-     * @throws UnsupportedOperationException if the {@code removeAll} operation
-     *                                       is not supported by this list
-     * @throws ClassCastException            if the class of an element of this list
-     *                                       is incompatible with the specified collection
-     *                                       (<a href="Collection.html#optional-restrictions">optional</a>)
-     * @throws NullPointerException          if this list contains a null element and the
-     *                                       specified collection does not permit null elements
-     *                                       (<a href="Collection.html#optional-restrictions">optional</a>),
-     *                                       or if the specified collection is null
-     * @see #remove(Object)
-     * @see #contains(Object)
      */
-//    @Override
+    @Override
     public boolean removeAll(Collection<?> c) {
         Iterator<?> i =c.iterator();
         while(i.hasNext()){//go through collection c
@@ -339,6 +347,18 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
         return false;
     }
 
+    /**
+     * Removes all consecutive occurrences of the specified element from the list.
+     * Handles both the head and internal nodes if they match the target.
+     *
+     * Example:
+     * - Given: list = [1, 2, 2, 3], removeAllElements(2)
+     *   Expect: list = [1, 3]
+     *
+     * Strategy: case distinction
+     * @param o the element to be removed from the list
+     * @return true if at least one element was removed
+     */
     public boolean removeAllElements(Object o){
         Node<T> current = first;
         for(; current != null; current = current.next){//go through linked-list
@@ -361,6 +381,17 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
         return true;
     }
 
+    /**
+     * Helper method that skips over consecutive nodes that match the target element.
+     * Used to remove continuous occurrences of an element in the list.
+     * Example:
+     * - Given: list segment = [2, 2, 2, 3], o = 2
+     *   Expect: return node containing 3
+     * Strategy: iteration
+     * @param current the node to start from
+     * @param o the value to skip over
+     * @return the first node that does not match o, or null if all match
+     */
     Node<T> removeContinueSame(Node<T> current, Object o){
         for(; current.data.equals(o); current=current.next){
             if(current.next!=null){
@@ -383,21 +414,14 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * from this list all of its elements that are not contained in the
      * specified collection.
      *
+     * Example:
+     * - Given: list = [1, 2, 3], collection = [2, 4]
+     *   Expect: list = [2]
+     * Strategy: iteration
      * @param c collection containing elements to be retained in this list
      * @return {@code true} if this list changed as a result of the call
-     * @throws UnsupportedOperationException if the {@code retainAll} operation
-     *                                       is not supported by this list
-     * @throws ClassCastException            if the class of an element of this list
-     *                                       is incompatible with the specified collection
-     *                                       (<a href="Collection.html#optional-restrictions">optional</a>)
-     * @throws NullPointerException          if this list contains a null element and the
-     *                                       specified collection does not permit null elements
-     *                                       (<a href="Collection.html#optional-restrictions">optional</a>),
-     *                                       or if the specified collection is null
-     * @see #remove(Object)
-     * @see #contains(Object)
      */
-//    @Override
+    @Override
     public boolean retainAll(Collection<?> c){
         Node<T> current = first;
         for(;current!= null; current = current.next){
@@ -412,7 +436,23 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
         return false;
     }
 
-    //determine whether there are continual targets
+    /**
+     * Skips over all consecutive nodes that are not present in the specified collection,
+     * and returns the first node that should be retained.
+     * Used in the retainAll logic to preserve only valid nodes.
+     *
+     * Example:
+     * - Given: list = [1, 4, 5, 2, 3], c = [2, 3]
+     *   Call: retainContinueElement(node with 1, [2, 3])
+     *   Expect: node with 2
+     * - Given: list = [1, 1, 1, 4, 3], c = [2, 3]
+     *   Call: retainContinueElement(node with 1, [2, 3])
+     *   Expect: node with 4
+     * Strategy: iteration
+     * @param current the starting node to examine
+     * @param c the collection containing allowed elements
+     * @return the first node that is present in the collection, or null if none found
+     */
     public Node<T> retainContinueElement(Node<T> current, Collection<?> c){
         if(current.next!=null){
             if(!allCollections(current.next, c)){//the next target is not the element
@@ -435,7 +475,18 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
         return null;
     }
 
-    //go through all elements from collection c when determine whether linked-list element is the target
+    /**
+     * Checks whether the data of the given node exists in the specified collection.
+     * Example:
+     * - Given: node with value 5, c = [1, 2, 5]
+     *   Expect: true
+     * - Given: node with value 9, c = [1, 2, 3]
+     *   Expect: false
+     * Strategy: iteration
+     * @param current the node whose data is to be tested
+     * @param c the collection against which data is compared
+     * @return true if the node's data is present in the collection
+     */
     public boolean allCollections(Node<T> current, Collection<?> c){
         Iterator<?> i = c.iterator();
         while(i.hasNext()){
@@ -451,23 +502,29 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * Removes all of the elements from this list (optional operation).
      * The list will be empty after this call returns.
      *
-     * @throws UnsupportedOperationException if the {@code clear} operation
-     *                                       is not supported by this list
+     * Example:
+     * - Given: list = [1, 2, 3]
+     *   Expect: list = []
+     *
+     * Strategy: simple expression
      */
-//    @Override
+    @Override
     public void clear() {
         first = null;
     }
 
     /**
-     * Returns the element at the specified position in this list.
-     *
+     * Returns the element at the specified index in this list.
+     * Example:
+     * - Given: list = [10, 20, 30], get(1)
+     *   Expect: 20
+     * Strategy: iteration
      * @param index index of the element to return
-     * @return the element at the specified position in this list
+     * @return the element at the specified position
      * @throws IndexOutOfBoundsException if the index is out of range
      *                                   ({@code index < 0 || index >= size()})
      */
-//    @Override
+    @Override
     public T get(int index) {
         if(index<0||index>=this.size()){
             throw new IndexOutOfBoundsException(index);
@@ -486,22 +543,17 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
     /**
      * Replaces the element at the specified position in this list with the
      * specified element (optional operation).
-     *
+     * Example:
+     * - Given: list = [1, 2, 3], set(1, 99)
+     *   Expect: list = [1, 99, 3], return = 2
+     * Strategy: iteration
      * @param index   index of the element to replace
      * @param element element to be stored at the specified position
      * @return the element previously at the specified position
-     * @throws UnsupportedOperationException if the {@code set} operation
-     *                                       is not supported by this list
-     * @throws ClassCastException            if the class of the specified element
-     *                                       prevents it from being added to this list
-     * @throws NullPointerException          if the specified element is null and
-     *                                       this list does not permit null elements
-     * @throws IllegalArgumentException      if some property of the specified
-     *                                       element prevents it from being added to this list
      * @throws IndexOutOfBoundsException     if the index is out of range
      *                                       ({@code index < 0 || index >= size()})
      */
-//    @Override
+    @Override
     public T set(int index, T t) {
         if(index<0||index>=this.size()){
             throw new IndexOutOfBoundsException(index);
@@ -523,21 +575,16 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * (optional operation).  Shifts the element currently at that position
      * (if any) and any subsequent elements to the right (adds one to their
      * indices).
-     *
+     * Example:
+     * - Given: list = [1, 2, 3], add(1, 99)
+     *   Expect: list = [1, 99, 2, 3]
+     * Strategy: iteration
      * @param index   index at which the specified element is to be inserted
      * @param element element to be inserted
-     * @throws UnsupportedOperationException if the {@code add} operation
-     *                                       is not supported by this list
-     * @throws ClassCastException            if the class of the specified element
-     *                                       prevents it from being added to this list
-     * @throws NullPointerException          if the specified element is null and
-     *                                       this list does not permit null elements
-     * @throws IllegalArgumentException      if some property of the specified
-     *                                       element prevents it from being added to this list
      * @throws IndexOutOfBoundsException     if the index is out of range
      *                                       ({@code index < 0 || index > size()})
      */
-//    @Override
+    @Override
     public void add(int index, T element) {
         if(index<0||index>this.size()){
             throw new IndexOutOfBoundsException(index);
@@ -552,7 +599,6 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
                     if(i == index&& index ==0){
                         temp.next=first;
                         first=temp;
-                        break;//为什么不加break也能跑
                     }
 //                else if(i ==index&& index ==1){
 //                    first.next=temp;
@@ -574,15 +620,16 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * operation).  Shifts any subsequent elements to the left (subtracts one
      * from their indices).  Returns the element that was removed from the
      * list.
-     *
+     * Example:
+     * - Given: list = [1, 2, 3], remove(1)
+     *   Expect: list = [1, 3], return = 2
+     * Strategy: iteration
      * @param index the index of the element to be removed
      * @return the element previously at the specified position
-     * @throws UnsupportedOperationException if the {@code remove} operation
-     *                                       is not supported by this list
      * @throws IndexOutOfBoundsException     if the index is out of range
      *                                       ({@code index < 0 || index >= size()})
      */
-//    @Override
+    @Override
     public T remove(int index) {
         if(index<0||index>=this.size()){
             throw new IndexOutOfBoundsException(index);
@@ -612,18 +659,15 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * More formally, returns the lowest index {@code i} such that
      * {@code Objects.equals(o, get(i))},
      * or -1 if there is no such index.
-     *
+     * Example:
+     * - Given: list = [1, 2, 3, 2], indexOf(2)
+     *   Expect: 1
+     * Strategy: iteration
      * @param o element to search for
      * @return the index of the first occurrence of the specified element in
      * this list, or -1 if this list does not contain the element
-     * @throws ClassCastException   if the type of the specified element
-     *                              is incompatible with this list
-     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
-     * @throws NullPointerException if the specified element is null and this
-     *                              list does not permit null elements
-     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
      */
-//    @Override
+    @Override
     public int indexOf(Object o) {
         Node<T> current = first;
         int i =0;
@@ -642,18 +686,15 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
      * More formally, returns the highest index {@code i} such that
      * {@code Objects.equals(o, get(i))},
      * or -1 if there is no such index.
-     *
+     * Example:
+     * - Given: list = [1, 2, 3, 2], lastIndexOf(2)
+     *   Expect: 3
+     * Strategy: iteration
      * @param o element to search for
      * @return the index of the last occurrence of the specified element in
      * this list, or -1 if this list does not contain the element
-     * @throws ClassCastException   if the type of the specified element
-     *                              is incompatible with this list
-     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
-     * @throws NullPointerException if the specified element is null and this
-     *                              list does not permit null elements
-     *                              (<a href="Collection.html#optional-restrictions">optional</a>)
      */
-//    @Override
+    @Override
     public int lastIndexOf(Object o) {
         Node<T> current = first;
         int i =0;
@@ -668,6 +709,21 @@ public class ConsListList<T> implements List<T>{//implement has been commented f
         return -1;
     }
 
+    /**
+     * Determines whether the given node is the last occurrence of a target value in the list.
+     *
+     * Example:
+     * - Given: list = [1, 2, 3, 2], o = 2
+     *   Expect: isLast(node at index 3, 2) true
+     *   Expect: isLast(node at index 1, 2) false
+     * - Given: list = [5, 6], o = 6
+     *   Expect: isLast(node at index 1, 6) true
+     *
+     * Strategy: iteration
+     * @param current the node to check from
+     * @param o the target value to test against
+     * @return true if current is the last node with value o, false otherwise
+     */
     public boolean isLast(Node<T> current, Object o){
         if(current.next==null){
             return true;
